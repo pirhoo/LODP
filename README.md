@@ -6,4 +6,4 @@ Ce dépôt Git est maintenu et alimenté par [@Pirhoo](http://twitter.com/pirhoo
 ## Sommaire ##
 ### 1. [Gselper](https://github.com/Pirhoo/LODP/tree/master/Gselper) ###
 Gselper est le tout premier code (et pour l'instant unique) mis en ligne sur ce dépôt. 
-Cette petite Classe vous permet d'utiliser très simplement un Google Speadsheet comme source de données, directement depuis vos application Javascript.
+Cette petite Classe vous permet d'utiliser très simplement un Google Speadsheet comme source de données, directement depuis vos applications Javascript.
