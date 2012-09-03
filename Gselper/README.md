@@ -8,15 +8,17 @@ Cette petite Classe vous permet d'utiliser très simplement un Google Speadsheet
 ### 0. Dépendances ###
 
 Pour fonctionner cette classe dépend de jQuery 1.4+ (non testée sur des version antérieures). Pour installer jQuery, vous pouvez utilisez en trois clics les CDNs de Google :
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+```
    
 ### 1. Inclure Gselper ###
 
 Facile, vous faites ça 18 fois par jour (mais veillez à n'inclure Gselper qu'une seule fois) :
+```html
+<script src="./class.Gselper.js" type="text/javascript"></script>
+```
 
-    <script src="./class.Gselper.js" type="text/javascript"></script>
-   
 ### 2. Préparez votre Google Spreadsheet ###
 
 Après avoir créé un nouveau Spreadsheet sur [Google Document](https://docs.google.com/), indiquez en tête de votre tableau le nom des colonnes. Attention la version actuelle de Gselper ne fonctionne qu'avec des documents d'une seule feuille. Rendez vous ensuite dans le menu sur "*Collaborer*" > "*Partager en tant que page Web*" puis dans la fenêtre Pop-up qui s'affiche cliquez sur le bouton "*Démarrer la publication*". Enfin, dans la partie "*Insérer un lien vers les données publiées*" du formulaire, selectionnez la version "*RSS*" est mettez le lien obtenu de coté. C'est très important.
@@ -30,41 +32,38 @@ Souvenez vous, je vous ai bien dit de mettre le lien précédent de coté. Il va
 Ici, relevez l'identifiant du document "0Avn7N68sxVzHdGpDRVVEZjZrMlBkTmNYLXM3aHYzUHc" et le worksheet "od6" (qui est toujours *od6* si vous n'avez qu'une seule feuille dans votre document).
 
 Une fois dans votre script Javascript vous n'avez plus qu'à faire :
+```js
+// Création de l'instance de Gselper
+var doc = new Gselper({
 
-    <script type="text/javascrpt">
+    // Identifiant du document
+    key: "0Avn7N68sxVzHdGpDRVVEZjZrMlBkTmNYLXM3aHYzUHc",
    
-        // Création de l'instance de Gselper
-        var doc = new Gselper({
+    // Le worksheet du document
+    worksheet: "od6",
+   
+    // La fonction à appeler lorsque le document est chargé
+    onComplete: function(data) {
+   
+        // Ici faites ce qu'il vous chante
+        // Par exemple, afficher dans la console le contenu de la première case
+        console.log( data.get(0).country );
        
-            // Identifiant du document
-            key: "0Avn7N68sxVzHdGpDRVVEZjZrMlBkTmNYLXM3aHYzUHc",
+        // Ou parcourir le document ligne après ligne
+        $.each(data.get(), function(i, line) {
            
-            // Le worksheet du document
-            worksheet: "od6",
+            // et afficher le résultat dans la console
+            console.log("Pays : " + line.country);
            
-            // La fonction à appeler lorsque le document est chargé
-            onComplete: function(data) {
-           
-                // Ici faites ce qu'il vous chante
-                // Par exemple, afficher dans la console le contenu de la première case
-                console.log( data.get(0).country );
-               
-                // Ou parcourir le document ligne après ligne
-                $.each(data.get(), function(i, line) {
-                   
-                    // et afficher le résultat dans la console
-                    console.log("Pays : " + line.country);
-                   
-                });
-               
-                // Jusqu'ici nous avons utilisé la variable reçu en paramètre "data"
-                // mais une fois le document chargé, nous pouvons utiliser l'objet "doc",
-                // ici pour afficher la première ligne
-                console.log( doc.get(1) );               
-            }
         });
        
-    </script>
+        // Jusqu'ici nous avons utilisé la variable reçu en paramètre "data"
+        // mais une fois le document chargé, nous pouvons utiliser l'objet "doc",
+        // ici pour afficher la première ligne
+        console.log( doc.get(1) );               
+    }
+});
+```
 
 ## To-Do ##
 
