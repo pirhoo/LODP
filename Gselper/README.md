@@ -1,15 +1,15 @@
 # [Gselper](https://github.com/Pirhoo/LODP/tree/master/Gselper)
 
-Gselper est le tout premier code mis en ligne sur ce dépôt.
-Cette petite Classe vous permet d'utiliser très simplement un Google Speadsheet comme source de données, directement depuis vos applications Javascript.
+Ce commit rajoute à la fonction le paramètre onFail, qui permet d'appeler une fonction en cas d'échec du chargement des données (mauvais paramètres, spreadsheet mal partagée ou surchargée), plutôt que de tout faire planter.
+Pour cela, il a fallu passer à jQuery 1.8+, à partir duquel les méthodes jqXHR.done(), jqXHR.fail() et jqXHR.always() sont disponibles.
 
 ## Bien démarrer avec Gselper ##
 
 ### 0. Dépendances ###
 
-Pour fonctionner cette classe dépend de jQuery 1.4+ (non testée sur des version antérieures). Pour installer jQuery, vous pouvez utilisez en trois clics les CDNs de Google :
+Pour fonctionner cette classe dépend de jQuery 1.8+ (non testée sur des version antérieures). Pour installer jQuery, vous pouvez utilisez en trois clics les CDNs de Google :
 ```html
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js" type="text/javascript"></script>
 ```
    
 ### 1. Inclure Gselper ###
@@ -61,6 +61,12 @@ var doc = new Gselper({
         // mais une fois le document chargé, nous pouvons utiliser l'objet "doc",
         // ici pour afficher la première ligne
         console.log( doc.get(1) );               
+    },
+
+    // La fonction à appeler lorsque qu'une erreur survient dans le chargement
+    onFail: function(data) {
+
+        console.log( "Something happened. Something happened." );               
     }
 });
 ```
