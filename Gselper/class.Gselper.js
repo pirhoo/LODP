@@ -6,20 +6,21 @@
  * 
  * @important Don't forget to make your spreadsheet PUBLIC
  *      Dependances : 
- *          - jQuery 1.4+
+ *          - jQuery 1.8+
  *           
  * @author <a href="mailto:pierre.romera@gmail.com">Pierre Romera</a>
- * @version 1.0.0
+ * modification on 5 Aug2015 (adding the onFail parameter to handle loading errors) : <a href="mailto:maximevaudano@gmail.com">Maxime Vaudano</a>
+ * @version 1.0.1
  */
 function Gselper(/** Object */ p_option) {
-    
     var that   = this, 
         // options
         option = {
             autoLoad   : true, // load the document automaticly
             key        : "",   // document key
             worksheet  : "",   // document worksheet (od5, od6, etc)
-            onComplete : null  // function to call after the document loading (and parsing)
+            onComplete : null,  // function to call after the document loading (and parsing)
+            onFail : null  // function to call if an error occurs while loading the document
         },
         // document loaded
         gDoc = {},
@@ -44,7 +45,7 @@ function Gselper(/** Object */ p_option) {
                 }
         }
 	
-        if(!!option.autoLoad) that.load( option.onComplete );
+        if(!!option.autoLoad) that.load( option.onComplete, option.onFail );
         
         return that;
     }
@@ -67,24 +68,32 @@ function Gselper(/** Object */ p_option) {
      * @param Function p_callback
      * @return Object
      */
-    this.load = function(p_callback) {
+    this.load = function(p_callback_success,p_callback_fail) {
         
         // key required
         if(option.key == "" || typeof option.key != "string") return false;
         // worksheet required too
         if(option.worksheet == "" || typeof option.worksheet != "string") return false;
         
-        var docUrl = "http://spreadsheets.google.com/feeds/list/"+option.key+"/"+option.worksheet+"/public/values?alt=json&callback=?";        
-        $.getJSON(docUrl, function(p_document) {
-        
-            // store the document
-            gDoc = p_document;
-            
-            // parse the document (to extract data)
-            if( !! that.parse() )
-                // callback function
-                if(typeof p_callback == "function") p_callback.call(that);
-        });
+        var docUrl = "http://spreadsheets.google.com/feeds/list/"+option.key+"/"+option.worksheet+"/public/values?alt=json&callback=?";   
+ 
+        var jqxhr = $.getJSON(docUrl, function() {
+            })
+            .done(function(p_document) {
+               // data successfully loaded
+               
+                // store the document
+                gDoc = p_document;
+                
+                // parse the document (to extract data)
+                if( !! that.parse() )
+                    // callback function
+                    if(typeof p_callback_success == "function") p_callback_success.call(that);
+            })
+            .fail(function() {
+                // "error while loading the data" 
+                if(typeof p_callback_fail == "function") p_callback_fail.call(that);
+            });
         
         return that;
     }
