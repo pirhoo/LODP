@@ -13,7 +13,6 @@
  * @version 1.0.1
  */
 function Gselper(/** Object */ p_option) {
-    console.log(p_option)
     var that   = this, 
         // options
         option = {
@@ -78,9 +77,11 @@ function Gselper(/** Object */ p_option) {
         
         var docUrl = "http://spreadsheets.google.com/feeds/list/"+option.key+"/"+option.worksheet+"/public/values?alt=json&callback=?";   
  
-        var jqxhr = $.getJSON(docUrl, function() {console.log( "success" );})
+        var jqxhr = $.getJSON(docUrl, function() {
+            })
             .done(function(p_document) {
-                console.log( "second success" );
+               // data successfully loaded
+               
                 // store the document
                 gDoc = p_document;
                 
@@ -90,7 +91,7 @@ function Gselper(/** Object */ p_option) {
                     if(typeof p_callback_success == "function") p_callback_success.call(that);
             })
             .fail(function() {
-                console.log( "error while loading the data" );
+                // "error while loading the data" 
                 if(typeof p_callback_fail == "function") p_callback_fail.call(that);
             });
         
