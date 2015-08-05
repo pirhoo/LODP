@@ -1,8 +1,6 @@
 # [Gselper](https://github.com/Pirhoo/LODP/tree/master/Gselper)
 
-Ce commit rajoute à la fonction le paramètre onFail, qui permet d'appeler une fonction en cas d'échec du chargement des données (mauvais paramètres, spreadsheet mal partagée ou surchargée), plutôt que de tout faire planter.
-Pour cela, il a fallu passer à jQuery 1.8+, à partir duquel les méthodes jqXHR.done(), jqXHR.fail() et jqXHR.always() sont disponibles.
-
+Cette petite Classe vous permet d'utiliser très simplement un Google Speadsheet comme source de données, directement depuis vos applications Javascript.
 
 ## Bien démarrer avec Gselper ##
 
